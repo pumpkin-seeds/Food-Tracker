@@ -1,5 +1,13 @@
 # FoodTracker
 
+## Notes to use this package
+
+1. Download the entire package. In terminal, cd to the folder where package.json is.
+2. Run `npm install`, this will install all the dependencies, nodes and modules that're not included in this package.
+3. Run `ng serve` to start a local host and navigate to `localhost:4200`
+4. Run `code .` to start VS Code, and start updating the code!
+5. Angular project name is FoodTracker
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.1.3.
 
 ## Development server
