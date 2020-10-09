@@ -11,5 +11,10 @@
   ],
   "include": [
     "src/**/*.d.ts"
-  ]
+  ],
+  // TODO(minalong): temporarily disabled ivy to avoid errors using Angular Material
+  // https://angular.io/guide/ivy-compatibility#how-to-debug-errors-with-ivy
+  "angularCompilerOptions": {
+    "enableIvy": false
+  }
 }

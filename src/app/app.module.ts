@@ -1,24 +1,26 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { MatInputModule } from '@angular/material/input';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './pages/home/home.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { TrackerModule } from './pages/tracker/tracker.module';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    NotFoundComponent
+    NotFoundComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
+
+    // The sub module for tracker page
+    TrackerModule,
     BrowserAnimationsModule,
-    MatInputModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
