@@ -1,15 +1,15 @@
-<form class="example-form">
-    <mat-form-field class="example-full-width">
-        <mat-label>Assignee</mat-label>
+<form class="tracker-form">
+    <mat-form-field class="tracker-full-width">
+        <mat-label>Search a food name to get started</mat-label>
         <input type="text"
                matInput
-               [formControl]="myControl"
+               [formControl]="searchFormControl"
                [matAutocomplete]="auto">
         <mat-autocomplete #auto="matAutocomplete"
-                          [displayWith]="displayFn">
-            <mat-option *ngFor="let option of filteredOptions | async"
-                        [value]="option">
-                {{option.name}}
+                          autoActiveFirstOption>
+            <mat-option *ngFor="let foodItem of filteredOptions | async"
+                        [value]="foodItem.foodName + ', ' + foodItem.sizePerServing">
+                {{ foodItem.foodName + ', ' + foodItem.sizePerServing }}
             </mat-option>
         </mat-autocomplete>
     </mat-form-field>

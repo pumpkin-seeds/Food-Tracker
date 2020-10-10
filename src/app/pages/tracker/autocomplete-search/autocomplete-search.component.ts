@@ -2,10 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
+import { FoodItem, foodList } from '../../../common/constants';
 
-export interface User {
-  name: string;
-}
 
 @Component({
   selector: 'app-autocomplete-search',
@@ -15,34 +13,27 @@ export interface User {
 
 export class AutocompleteSearchComponent implements OnInit {
 
-  myControl = new FormControl();
+  searchFormControl = new FormControl();
 
-  options: User[] = [
-    { name: 'Mary' },
-    { name: 'Shelley' },
-    { name: 'Igor' }
-  ];
-  filteredOptions: Observable<User[]>;
+  foodList: FoodItem[] = foodList; // constants
 
+  filteredOptions: Observable<FoodItem[]>;
 
   constructor() { }
 
   ngOnInit(): void {
-    this.filteredOptions = this.myControl.valueChanges
+    this.filteredOptions = this.searchFormControl.valueChanges
       .pipe(
         startWith(''),
-        map(value => typeof value === 'string' ? value : value.name),
-        map(name => name ? this._filter(name) : this.options.slice())
+        map(value => this._filter(value))
       );
   }
 
-  displayFn(user: User): string {
-    return user && user.name ? user.name : '';
-  }
-
-  private _filter(name: string): User[] {
+  // TODO(minalong): as user types, send input to BE endpoint to dynamically 
+  // send back a list of FoodItems for FE filtering. To refactor the filter function.
+  // do not have frontend handle the entire foodItem list.
+  private _filter(name: string): FoodItem[] {
     const filterValue = name.toLowerCase();
-
-    return this.options.filter(option => option.name.toLowerCase().indexOf(filterValue) === 0);
+    return this.foodList.filter(option => option.foodName.toLowerCase().indexOf(filterValue) === 0);
   }
 }
