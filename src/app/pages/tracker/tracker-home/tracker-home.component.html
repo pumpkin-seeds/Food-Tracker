@@ -8,8 +8,27 @@
         <mat-card-subtitle>Are you ready?</mat-card-subtitle>
     </mat-card-header>
 
+    <div class="right">
+        <app-date-picker></app-date-picker>
+    </div>
     <div class="centered-horizontal">
         <app-autocomplete-search></app-autocomplete-search>
+    </div>
+
+    <div mat-subheader>Nutrition - Individual Items</div>
+    <div class="quantity-label">
+        <label>Quantities</label>
+    </div>
+    
+    <div>
+        <app-nutrition-panel [summary]="false"></app-nutrition-panel>
+    </div>
+    
+    <mat-divider></mat-divider>
+    <div mat-subheader>Nutrition - Summary</div>
+    
+    <div>
+        <app-nutrition-panel [summary]="true"></app-nutrition-panel>
     </div>
 
 </mat-card>

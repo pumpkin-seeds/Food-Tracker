@@ -1,0 +1,23 @@
+.mat-form-field+.mat-form-field {
+    margin-left: 8px;
+}
+
+.quantity-input {
+    width: 7%;
+    padding: 3px 5px;
+    margin-top: 1px;
+    margin-right: 10px;
+}
+
+.nutrition-fact {
+    float: right;
+}
+
+.mat-icon {
+    margin-right: 15px;
+}
+
+.mat-expansion-panel-header-title {
+    display: flex;
+    align-items: center;
+}

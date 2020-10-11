@@ -1,0 +1,70 @@
+<mat-accordion>
+    <mat-expansion-panel multi="true"
+                         *ngIf="!summary"
+                         [expanded]="false">
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                <mat-icon mat-list-icon>fastfood</mat-icon>
+                Apple
+            </mat-panel-title>
+            <input type="number"
+                   id="quantity"
+                   (click)="$event.stopPropagation()"
+                   class="quantity-input" />
+        </mat-expansion-panel-header>
+
+        <mat-list>
+            <!-- <mat-list-item *ngFor="let folder of folders"> -->
+            <mat-list-item>
+                <div mat-line>
+                    <span>Calories</span>
+                    <span class="nutrition-fact">100 g</span>
+                </div>
+            </mat-list-item>
+            <mat-list-item>
+                <div mat-line>
+                    <span>Protein</span>
+                    <span class="nutrition-fact">10 g</span>
+                </div>
+            </mat-list-item>
+            <mat-list-item>
+                <div mat-line>
+                    <span>Carbs</span>
+                    <span class="nutrition-fact">20 g</span>
+                </div>
+            </mat-list-item>
+        </mat-list>
+    </mat-expansion-panel>
+
+
+    <mat-expansion-panel multi="true"
+                         *ngIf="summary"
+                         [expanded]="true">
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                <mat-icon mat-list-icon>shopping_bag</mat-icon>
+                Total
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+        <mat-list>
+            <mat-list-item>
+                <div mat-line>
+                    <span>Calories</span>
+                    <span class="nutrition-fact">100 g</span>
+                </div>
+            </mat-list-item>
+            <mat-list-item>
+                <div mat-line>
+                    <span>Protein</span>
+                    <span class="nutrition-fact">10 g</span>
+                </div>
+            </mat-list-item>
+            <mat-list-item>
+                <div mat-line>
+                    <span>Carbs</span>
+                    <span class="nutrition-fact">20 g</span>
+                </div>
+            </mat-list-item>
+        </mat-list>
+    </mat-expansion-panel>
+</mat-accordion>
