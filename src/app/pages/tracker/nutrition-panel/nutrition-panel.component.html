@@ -1,68 +1,56 @@
-<mat-accordion>
-    <mat-expansion-panel multi="true"
-                         *ngIf="!summary"
-                         [expanded]="false">
+<div mat-subheader>Nutrition - Individual Items</div>
+<div class="quantity-label">
+    <label>Quantities</label>
+</div>
+
+<mat-accordion multi="true">
+    <div *ngFor="let food of foodList">
+        <mat-expansion-panel [expanded]="false">
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    <mat-icon mat-list-icon
+                              color="primary">fastfood</mat-icon>
+                    {{ food.foodName }}
+                </mat-panel-title>
+                <button mat-icon-button
+                        color="primary"
+                        matTooltip="Delete food item"
+                        (click)="deleteFoodItem(food)">
+                    <mat-icon>delete</mat-icon>
+                </button>
+                <input type="number"
+                       id="quantity"
+                       (click)="$event.stopPropagation()"
+                       class="quantity-input" />
+            </mat-expansion-panel-header>
+            <mat-list *ngFor="let key of nutritionEnumKeys">
+                <mat-list-item>
+                    <div mat-line>
+                        <span>{{ getEnumValue(key) }}</span>
+                        <span class="nutrition-fact">{{ food[key] }}</span>
+                    </div>
+                </mat-list-item>
+            </mat-list>
+        </mat-expansion-panel>
+    </div>
+
+    <br>
+    <mat-divider></mat-divider>
+    <div mat-subheader>Nutrition - Summary</div>
+
+    <mat-expansion-panel [expanded]="true">
         <mat-expansion-panel-header>
             <mat-panel-title>
-                <mat-icon mat-list-icon>fastfood</mat-icon>
-                Apple
-            </mat-panel-title>
-            <input type="number"
-                   id="quantity"
-                   (click)="$event.stopPropagation()"
-                   class="quantity-input" />
-        </mat-expansion-panel-header>
-
-        <mat-list>
-            <!-- <mat-list-item *ngFor="let folder of folders"> -->
-            <mat-list-item>
-                <div mat-line>
-                    <span>Calories</span>
-                    <span class="nutrition-fact">100 g</span>
-                </div>
-            </mat-list-item>
-            <mat-list-item>
-                <div mat-line>
-                    <span>Protein</span>
-                    <span class="nutrition-fact">10 g</span>
-                </div>
-            </mat-list-item>
-            <mat-list-item>
-                <div mat-line>
-                    <span>Carbs</span>
-                    <span class="nutrition-fact">20 g</span>
-                </div>
-            </mat-list-item>
-        </mat-list>
-    </mat-expansion-panel>
-
-
-    <mat-expansion-panel multi="true"
-                         *ngIf="summary"
-                         [expanded]="true">
-        <mat-expansion-panel-header>
-            <mat-panel-title>
-                <mat-icon mat-list-icon>shopping_bag</mat-icon>
+                <mat-icon mat-list-icon
+                          color="primary">shopping_bag</mat-icon>
                 Total
             </mat-panel-title>
         </mat-expansion-panel-header>
-        <mat-list>
+        <mat-list *ngFor="let key of nutritionEnumKeys">
             <mat-list-item>
                 <div mat-line>
-                    <span>Calories</span>
-                    <span class="nutrition-fact">100 g</span>
-                </div>
-            </mat-list-item>
-            <mat-list-item>
-                <div mat-line>
-                    <span>Protein</span>
-                    <span class="nutrition-fact">10 g</span>
-                </div>
-            </mat-list-item>
-            <mat-list-item>
-                <div mat-line>
-                    <span>Carbs</span>
-                    <span class="nutrition-fact">20 g</span>
+                    <span>{{ getEnumValue(key) }}</span>
+                    <span class="nutrition-fact">{{ foodSumary[key] }}</span>
                 </div>
             </mat-list-item>
         </mat-list>

@@ -6,7 +6,8 @@
                [formControl]="searchFormControl"
                [matAutocomplete]="auto">
         <mat-autocomplete #auto="matAutocomplete"
-                          autoActiveFirstOption>
+                          autoActiveFirstOption
+                          (optionSelected)="selectFood($event)">
             <mat-option *ngFor="let foodItem of filteredOptions | async"
                         [value]="foodItem.foodName + ', ' + foodItem.sizePerServing">
                 {{ foodItem.foodName + ', ' + foodItem.sizePerServing }}

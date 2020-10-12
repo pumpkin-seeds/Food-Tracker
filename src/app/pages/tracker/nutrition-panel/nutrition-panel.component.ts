@@ -1,4 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FoodItem, NutritionsToShow } from 'src/app/common/constants';
 
 @Component({
   selector: 'app-nutrition-panel',
@@ -7,12 +8,25 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class NutritionPanelComponent implements OnInit {
 
-  panelOpenState = open;
-  @Input() summary: boolean;
+  @Input() foodList: FoodItem[] = []; // emitted property from parent tracker-home
+  @Input() foodSumary: FoodItem;
+  @Output() onFoodDeletion = new EventEmitter<FoodItem>();
+
+  // ['foodCalorie','foodCarb','foodProtein'...]
+  nutritionEnumKeys = Object.keys(NutritionsToShow);
 
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  // Covert nutrition type from backend data to FE display using enum
+  getEnumValue(key: string) {
+    return NutritionsToShow[key];
+  }
+
+  deleteFoodItem(foodItem: FoodItem) {
+    this.onFoodDeletion.emit(foodItem);
   }
 
 }

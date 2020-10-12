@@ -1,4 +1,4 @@
-<mat-toolbar>
+<mat-toolbar color="primary">
     <span>Food Tracker</span>
 </mat-toolbar>
 
@@ -12,23 +12,17 @@
         <app-date-picker></app-date-picker>
     </div>
     <div class="centered-horizontal">
-        <app-autocomplete-search></app-autocomplete-search>
+        <!-- (onFoodPicked)="onFoodSelect($event) is child component autocomplete-search -->
+        <!-- emitting an event to parent to pass in the selected food name -->
+        <app-autocomplete-search [foodList]="foodList"
+                                 (onFoodPicked)="onFoodSelect($event)"></app-autocomplete-search>
     </div>
 
-    <div mat-subheader>Nutrition - Individual Items</div>
-    <div class="quantity-label">
-        <label>Quantities</label>
+    <div *ngIf="foodSelected.length>0">
+        <div>
+            <app-nutrition-panel [foodList]="foodSelected"
+                                 [foodSumary]="summaryNutrition"
+                                 (onFoodDeletion)="onFoodDeleted($event)"></app-nutrition-panel>
+        </div>
     </div>
-    
-    <div>
-        <app-nutrition-panel [summary]="false"></app-nutrition-panel>
-    </div>
-    
-    <mat-divider></mat-divider>
-    <div mat-subheader>Nutrition - Summary</div>
-    
-    <div>
-        <app-nutrition-panel [summary]="true"></app-nutrition-panel>
-    </div>
-
 </mat-card>

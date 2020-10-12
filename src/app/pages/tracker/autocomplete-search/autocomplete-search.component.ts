@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
-import { FoodItem, foodList } from '../../../common/constants';
+import { FoodItem } from '../../../common/constants';
 
 
 @Component({
@@ -15,7 +16,9 @@ export class AutocompleteSearchComponent implements OnInit {
 
   searchFormControl = new FormControl();
 
-  foodList: FoodItem[] = foodList; // constants
+  @Input() foodList: FoodItem[];
+  // child component going to emit food selected to parent component tracker-home
+  @Output() onFoodPicked = new EventEmitter<string>();
 
   filteredOptions: Observable<FoodItem[]>;
 
@@ -36,4 +39,14 @@ export class AutocompleteSearchComponent implements OnInit {
     const filterValue = name.toLowerCase();
     return this.foodList.filter(option => option.foodName.toLowerCase().indexOf(filterValue) === 0);
   }
+
+  // Once user selects a food, reset the value to ''
+  // emits an event to parent component tracker-home to pass the selected food name
+  // TODO(minalong): note that the food name here is foodname + sizePerServing, might need to refactor
+  selectFood(event: MatAutocompleteSelectedEvent) {
+    this.searchFormControl.setValue('');
+    // console.log("yes:" + event.option.value);
+    this.onFoodPicked.emit(event.option.value);
+  }
+
 }

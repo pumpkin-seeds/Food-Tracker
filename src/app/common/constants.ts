@@ -76,3 +76,22 @@ export const foodList: FoodItem[] = [
         foodProtein: 1.6,
     },
 ]
+
+
+// An FoodItem object with properties as empty or default
+export const emptyFoodItem: FoodItem =
+{
+    foodId: '',
+    foodName: '',
+    sizePerServing: '',
+    foodCalorie: 0,
+    foodCarb: 0,
+    foodProtein: 0,
+};
+
+// nutritions the frontend will show to users
+export enum NutritionsToShow {
+    'foodCalorie' = 'Calories',
+    'foodCarb' = 'Carbs',
+    'foodProtein' = 'Protein',
+}

@@ -11,6 +11,8 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { MatButtonModule } from '@angular/material/button';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 import { TrackerRoutingModule } from './tracker-routing.module';
 import { TrackerHomeComponent } from './tracker-home/tracker-home.component';
@@ -44,6 +46,8 @@ import { NutritionPanelComponent } from './nutrition-panel/nutrition-panel.compo
     MatListModule,
     MatIconModule,
     MatExpansionModule,
+    MatButtonModule,
+    MatTooltipModule,
   ]
 })
 export class TrackerModule { }
