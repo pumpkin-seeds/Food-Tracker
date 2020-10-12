@@ -23,7 +23,12 @@
             <app-nutrition-panel [foodList]="foodSelected"
                                  [foodSumary]="summaryNutrition"
                                  (onFoodDeletion)="onFoodDeleted($event)"
-                                 (onQuantityChange)="onFoodQuantityChange($event)"></app-nutrition-panel>
+                                 (onQuantityChange)="onFoodQuantityChange($event)">
+            </app-nutrition-panel>
         </div>
+        <br>
+        <button mat-raised-button
+                (click)="onSubmit()"
+                color="primary">Submit</button>
     </div>
 </mat-card>

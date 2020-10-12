@@ -18,21 +18,21 @@
                         (click)="deleteFoodItem(food)">
                     <mat-icon>delete</mat-icon>
                 </button>
-                <!-- TODO(minalong):input cannot be negative -->
                 <input type="number"
+                       min="0"
                        id="quantity"
+                       matTooltip="Mininum Quantity is 0.1"
                        (click)="$event.stopPropagation()"
                        class="quantity-input"
                        value="1"
                        (input)="updateQuantity(food,$event.target.value)" />
-                       <!-- above input binding is one way -->
+                <!-- above input binding is one way -->
             </mat-expansion-panel-header>
             <mat-list *ngFor="let key of nutritionEnumKeys">
                 <mat-list-item>
                     <div mat-line>
                         <span>{{ getEnumValue(key) }}</span>
-                        <!-- TODO(minalong): round this nutrition fact display to avoid 2.0999999999996 -->
-                        <span class="nutrition-fact">{{ food[key]*food.foodQuantity }}</span>
+                        <span class="nutrition-fact">{{ displayNumber(food[key]*food.foodQuantity) }}</span>
                     </div>
                 </mat-list-item>
             </mat-list>

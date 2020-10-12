@@ -18,3 +18,7 @@
     width: 300px;
     padding: 10px;
 }
+
+.mat-raised-button {
+    margin-left: 80%;
+}

@@ -34,4 +34,8 @@ export class NutritionPanelComponent implements OnInit {
     this.onQuantityChange.emit({ foodId: foodItem.foodId, newQuantity: value });
   }
 
+  displayNumber(num: number) {
+    return Math.round(num * 10) / 10;
+  }
+
 }

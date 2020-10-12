@@ -49,12 +49,21 @@ export class TrackerHomeComponent implements OnInit {
   // child component nutrition-panel emits event to change quantity
   onFoodQuantityChange({ foodId, newQuantity }) {
     const foodItem = getFoodItemObjectFromID(foodId, this.foodSelected);
+    // if quantity becomes less than 0.1 consider user is deleting the food item
+    if (newQuantity < 0.1) {
+      this.onFoodDeleted(foodItem);
+      return;
+    }
     const oldQuantity = foodItem.foodQuantity;
     foodItem.foodQuantity = newQuantity;
 
     // update nutrition summary
     this.summaryNutrition =
       updateFoodNutritionToSummary(foodItem, oldQuantity, newQuantity, this.summaryNutrition);
-    // console.log(this.foodSelected);
+  }
+
+  // submit current page selections
+  onSubmit() {
+    // TODO(minalong): call service to submit to backend.
   }
 }
