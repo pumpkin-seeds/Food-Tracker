@@ -11,6 +11,7 @@ export class NutritionPanelComponent implements OnInit {
   @Input() foodList: FoodItem[] = []; // emitted property from parent tracker-home
   @Input() foodSumary: FoodItem;
   @Output() onFoodDeletion = new EventEmitter<FoodItem>();
+  @Output() onQuantityChange = new EventEmitter<{ foodId: string, newQuantity: number }>(); // emit object
 
   // ['foodCalorie','foodCarb','foodProtein'...]
   nutritionEnumKeys = Object.keys(NutritionsToShow);
@@ -27,6 +28,10 @@ export class NutritionPanelComponent implements OnInit {
 
   deleteFoodItem(foodItem: FoodItem) {
     this.onFoodDeletion.emit(foodItem);
+  }
+
+  updateQuantity(foodItem: FoodItem, value: number) {
+    this.onQuantityChange.emit({ foodId: foodItem.foodId, newQuantity: value });
   }
 
 }

@@ -22,7 +22,8 @@
         <div>
             <app-nutrition-panel [foodList]="foodSelected"
                                  [foodSumary]="summaryNutrition"
-                                 (onFoodDeletion)="onFoodDeleted($event)"></app-nutrition-panel>
+                                 (onFoodDeletion)="onFoodDeleted($event)"
+                                 (onQuantityChange)="onFoodQuantityChange($event)"></app-nutrition-panel>
         </div>
     </div>
 </mat-card>

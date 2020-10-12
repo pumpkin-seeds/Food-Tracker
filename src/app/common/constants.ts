@@ -5,6 +5,7 @@ export interface FoodItem {
     foodCalorie: number,
     foodCarb: number,
     foodProtein: number,
+    foodQuantity?: number,
 }
 
 // TODO(minalong): Pretend this is the list we get from the backend
@@ -87,6 +88,7 @@ export const emptyFoodItem: FoodItem =
     foodCalorie: 0,
     foodCarb: 0,
     foodProtein: 0,
+    foodQuantity: 0,
 };
 
 // nutritions the frontend will show to users

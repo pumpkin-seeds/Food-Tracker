@@ -10,7 +10,7 @@
                 <mat-panel-title>
                     <mat-icon mat-list-icon
                               color="primary">fastfood</mat-icon>
-                    {{ food.foodName }}
+                    {{ food.foodName + ', ' + food.sizePerServing }}
                 </mat-panel-title>
                 <button mat-icon-button
                         color="primary"
@@ -18,16 +18,21 @@
                         (click)="deleteFoodItem(food)">
                     <mat-icon>delete</mat-icon>
                 </button>
+                <!-- TODO(minalong):input cannot be negative -->
                 <input type="number"
                        id="quantity"
                        (click)="$event.stopPropagation()"
-                       class="quantity-input" />
+                       class="quantity-input"
+                       value="1"
+                       (input)="updateQuantity(food,$event.target.value)" />
+                       <!-- above input binding is one way -->
             </mat-expansion-panel-header>
             <mat-list *ngFor="let key of nutritionEnumKeys">
                 <mat-list-item>
                     <div mat-line>
                         <span>{{ getEnumValue(key) }}</span>
-                        <span class="nutrition-fact">{{ food[key] }}</span>
+                        <!-- TODO(minalong): round this nutrition fact display to avoid 2.0999999999996 -->
+                        <span class="nutrition-fact">{{ food[key]*food.foodQuantity }}</span>
                     </div>
                 </mat-list-item>
             </mat-list>
