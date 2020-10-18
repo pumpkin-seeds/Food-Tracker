@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { emptyFoodItem, FoodItem, foodList } from 'src/app/common/constants';
 import { addFoodNutritionToSummary, getFoodItemObjectFromID, getFoodItemObjectFromName, parseFoodDisplayNameToFoodName, parseFoodDisplayNameToSize, removeFoodNutritionFromSummary, updateFoodNutritionToSummary } from 'src/app/common/utils';
+import { FoodService } from 'src/app/services/food.service';
 
 @Component({
   selector: 'app-tracker-home',
@@ -15,9 +16,13 @@ export class TrackerHomeComponent implements OnInit {
   foodSelected: FoodItem[] = [];
   summaryNutrition: FoodItem = emptyFoodItem;
 
-  constructor() { }
+  // TODO: testing local backend...
+  foodBE = [];
+
+  constructor(private foodService: FoodService) { }
 
   ngOnInit(): void {
+    this.foodService.getFoodListById(320413).subscribe(food => this.foodBE.push(food));
   }
 
   // child component autocomplete-search selects a food and emit an event to tracker-home component
