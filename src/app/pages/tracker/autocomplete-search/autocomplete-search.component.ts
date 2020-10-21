@@ -1,8 +1,9 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
-import { Observable } from 'rxjs';
-import { map, startWith } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { debounceTime, switchMap } from 'rxjs/operators';
+import { FoodService } from 'src/app/services/food.service';
 import { FoodItem } from '../../../common/constants';
 
 
@@ -16,33 +17,35 @@ export class AutocompleteSearchComponent implements OnInit {
 
   searchFormControl = new FormControl();
 
-  @Input() foodList: FoodItem[];
+  foodList: FoodItem[] = [];
   // child component going to emit food selected to parent component tracker-home
   @Output() onFoodPicked = new EventEmitter<string>();
 
   filteredOptions: Observable<FoodItem[]>;
 
-  constructor() { }
+  constructor(private foodService: FoodService) {
+  }
 
   ngOnInit(): void {
     this.filteredOptions = this.searchFormControl.valueChanges
       .pipe(
-        startWith(''),
-        map(value => this._filter(value))
+        debounceTime(1000),
+        switchMap(value => this._filter(value)) // switchMap since we have inner observable
       );
   }
 
-  // TODO(minalong): as user types, send input to BE endpoint to dynamically 
-  // send back a list of FoodItems for FE filtering. To refactor the filter function.
-  // do not have frontend handle the entire foodItem list.
-  private _filter(name: string): FoodItem[] {
+  // Send search term to BE and return a list of FoodItems
+  // without nutrition details.
+  private _filter(name: string): Observable<FoodItem[]> {
+    if (name.length === 0) {
+      return of([]);
+    } 
     const filterValue = name.toLowerCase();
-    return this.foodList.filter(option => option.foodName.toLowerCase().indexOf(filterValue) === 0);
+    return this.foodService.searchFoodListByName(name);
   }
 
   // Once user selects a food, reset the value to ''
-  // emits an event to parent component tracker-home to pass the selected food name
-  // TODO(minalong): note that the food name here is foodname + sizePerServing, might need to refactor
+  // emits an event to parent component tracker-home to pass the selected food id
   selectFood(event: MatAutocompleteSelectedEvent) {
     this.searchFormControl.setValue('');
     // console.log("yes:" + event.option.value);

@@ -1,5 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { createFoodItem, FoodInfoBE, FoodItem } from '../common/constants';
 
 @Injectable({
   providedIn: 'root'
@@ -12,20 +15,55 @@ export class FoodService {
   constructor(private httpClient: HttpClient) { }
 
   // Get a list of Food items nutritions by giving the food id
-  public getFoodListById(id: number) {
-    return this.httpClient.get(this.baseUrl, {
+  public async getFoodListById(id: string): Promise<FoodItem> {
+    return await this.httpClient.get<FoodInfoBE[]>(this.baseUrl, {
       params: {
-        id: id.toString(),
+        id: id,
       }
-    })
+    }).pipe(
+      // map(res => {
+      //   console.log(res);
+      //   return res;
+      // }),
+      map(res => {
+        if (res.length === 0) {
+          return;
+        }
+        let calories = 0;
+        let carb = 0;
+        let protein = 0;
+        res.forEach(element => {
+          if (element.nutritionId === 1003) {
+            // 1003 Protein
+            protein = element.nutritionAmount;
+          } else if (element.nutritionId === 1005) {
+            // 1005 carbs
+            carb = element.nutritionAmount;
+          } else if (element.nutritionId === 1008) {
+            // 1008 calories
+            calories = element.nutritionAmount;
+          } 
+        });
+        return createFoodItem(res[0].foodId.toString(), res[0].foodDescription,
+          res[0].servingSize, calories, carb, protein, 1);
+      })
+    ).toPromise()
   }
 
   // Search and return a list of Food items by giving the food name
-  public searchFoodListByName(name: string) {
-    return this.httpClient.get(this.baseUrl, {
+  public searchFoodListByName(name: string): Observable<FoodItem[]> {
+    return this.httpClient.get<FoodInfoBE[]>(this.baseUrl, {
       params: {
         name: name,
       }
     })
-  }
+      .pipe(map(response => {
+        return response.map((item: FoodInfoBE) => { // Since the json is a list, we need two maps
+          return createFoodItem(item.foodId.toString(), item.foodDescription, item.servingSize,
+            0, 0, 0, 0); // Setting nutritions values to zeros
+        })
+        }
+      ));
+  };
+  ;
 }

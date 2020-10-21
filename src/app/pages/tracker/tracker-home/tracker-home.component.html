@@ -14,8 +14,7 @@
     <div class="centered-horizontal">
         <!-- (onFoodPicked)="onFoodSelect($event) is child component autocomplete-search -->
         <!-- emitting an event to parent to pass in the selected food name -->
-        <app-autocomplete-search [foodList]="foodList"
-                                 (onFoodPicked)="onFoodSelect($event)"></app-autocomplete-search>
+        <app-autocomplete-search (onFoodPicked)="onFoodSelect($event)"></app-autocomplete-search>
     </div>
 
     <div *ngIf="foodSelected.length>0">
@@ -32,7 +31,3 @@
                 color="primary">Submit</button>
     </div>
 </mat-card>
-<!-- TODO: delete below - testing local backend only -->
-<div>
-    <li *ngFor="let obj of foodBE">{{obj | json}}</li>
-</div>

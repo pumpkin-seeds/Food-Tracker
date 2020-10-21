@@ -1,5 +1,3 @@
-import { ExistingProvider } from '@angular/core';
-import { RouteConfigLoadEnd } from '@angular/router';
 import { FoodItem } from './constants';
 
 /* Class for utility functions */
@@ -16,10 +14,10 @@ export function parseFoodDisplayNameToSize(foodDisplayName: string) {
     return foodDisplayName.split(',')[1].trim();
 }
 
-// get FoodItem object based on food name and size
+// get FoodItem object based on food id
 // e.g.: Beef & 100g & FoodItem[] => FoodItem {foodname:xx, foodid:xx ...}
-export function getFoodItemObjectFromName(foodname: string, foodSize: string, list: FoodItem[]): FoodItem {
-    return list.find(item => item.foodName === foodname && item.sizePerServing === foodSize);
+export function getFoodItemObjectFromId(foodid: string, list: FoodItem[]): FoodItem {
+    return list.find(item => item.foodId === foodid);
 }
 
 // get FoodItem object based on food id

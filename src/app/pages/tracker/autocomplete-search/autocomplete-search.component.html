@@ -8,10 +8,12 @@
         <mat-autocomplete #auto="matAutocomplete"
                           autoActiveFirstOption
                           (optionSelected)="selectFood($event)">
+        <div *ngIf="filteredOptions">
             <mat-option *ngFor="let foodItem of filteredOptions | async"
-                        [value]="foodItem.foodName + ', ' + foodItem.sizePerServing">
+                        [value]="foodItem.foodId">
                 {{ foodItem.foodName + ', ' + foodItem.sizePerServing }}
             </mat-option>
+        </div>
         </mat-autocomplete>
     </mat-form-field>
 </form>
