@@ -23,12 +23,12 @@ export const createFoodItem = (id: string, name: string, size: string,
 
 // FoodInfo class received from BE in FoodService
 export interface FoodInfoBE {
-    "foodId": number,
-    "nutritionId": number,
-    "foodDescription": string,
-    "servingSize": string,
-    "nutritionName": string,
-    "nutritionAmount": number,
+    foodId: number,
+    nutritionId: number,
+    foodDescription: string,
+    servingSize: string,
+    nutritionName: string,
+    nutritionAmount: number,
 }
 
 // An FoodItem object with properties as empty or default

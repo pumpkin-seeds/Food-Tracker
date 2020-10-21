@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
+import { isNgTemplate } from '@angular/compiler';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { filter, map } from 'rxjs/operators';
 import { createFoodItem, FoodInfoBE, FoodItem } from '../common/constants';
 
 @Injectable({
@@ -57,13 +58,26 @@ export class FoodService {
         name: name,
       }
     })
-      .pipe(map(response => {
-        return response.map((item: FoodInfoBE) => { // Since the json is a list, we need two maps
-          return createFoodItem(item.foodId.toString(), item.foodDescription, item.servingSize,
-            0, 0, 0, 0); // Setting nutritions values to zeros
-        })
-        }
-      ));
+      .pipe(
+        map(response => {
+          let foodIdSet = new Set<number>();
+          return response.
+            map((item: FoodInfoBE) => { // Since the json is a list, we need two maps
+              if (foodIdSet.has(item.foodId)) {
+                return;
+              }
+              foodIdSet.add(item.foodId);
+              return createFoodItem(item.foodId.toString(), item.foodDescription, item.servingSize,
+                0, 0, 0, 0); // Setting nutritions values to zeros
+            })
+        }),
+        // Use filter to remove duplicated FoodItem items with the same food names
+        map(res => res.filter((item: FoodItem) => item !== undefined)),
+        // map(res => {
+        //   console.log(res)
+        //   return res;
+        // }),
+      );
   };
-  ;
+
 }
