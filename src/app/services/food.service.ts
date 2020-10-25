@@ -15,8 +15,8 @@ export class FoodService {
   constructor(private httpClient: HttpClient) { }
 
   // Get a list of Food items nutritions by giving the food id
-  public async getFoodItemById(id: string, quantity?: number): Promise<FoodItem> {
-    return await this.httpClient.get<FoodInfoBE[]>(this.baseUrl, {
+  public getFoodItemById(id: string, quantity?: number) {
+    return this.httpClient.get<FoodInfoBE[]>(this.baseUrl, {
       params: {
         id: id,
       }
@@ -47,7 +47,7 @@ export class FoodService {
         return createFoodItem(res[0].foodId.toString(), res[0].foodDescription,
           res[0].servingSize, calories, carb, protein, quantity ? quantity : 1);
       })
-    ).toPromise()
+    )
   }
 
   // Search and return a list of Food items by giving the food name

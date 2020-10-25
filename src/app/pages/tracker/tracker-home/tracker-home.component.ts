@@ -29,11 +29,14 @@ export class TrackerHomeComponent implements OnInit {
       // TODO(minalong): show a warning to user that they're trying to add duplicate food
       return;
     }
-    this.foodService.getFoodItemById(foodid).then(res => {
-      this.foodSelected.push(res);
-      // update current summary nutrition
-      this.summaryNutrition = addFoodNutritionToSummary(res, this.summaryNutrition)
-    });
+    this.foodService.getFoodItemById(foodid)
+      .pipe(
+        map(res => {
+        this.foodSelected.push(res);
+        // update current summary nutrition
+        this.summaryNutrition = addFoodNutritionToSummary(res, this.summaryNutrition)
+        }),
+      ).subscribe()
   }
 
   // child component nutrition-panel deletes a food and emit an event to tracker-home component
@@ -64,18 +67,18 @@ export class TrackerHomeComponent implements OnInit {
     const formatted = formatDate(dateSelected, 'yyyy-MM-dd', 'en-US')
     this.userInfoService.getUserInfo(formatted, "johnmark")
       .pipe(
-        switchMap(userInfoList => {
-          userInfoList.forEach(async element => {
+        // switchMap(userInfoList => {
+        //   userInfoList.forEach(async element => {
             // this.foodSelected.push(await this.foodService
             // .getFoodItemById(element.foodId.toString(), element.quantity));
-            // return this.foodService.getFoodItemById(element.foodId.toString(), element.quantity)
-            //   .then(res => this.foodSelected.push(res));
-          })
-        }),
+        //     return this.foodService.getFoodItemById(element.foodId.toString(), element.quantity)
+        //       .then(res => this.foodSelected.push(res));
+        //   })
+        // }),
       )
-    // .subscribe(
-    //   res => console.log(res)
-    // )
+      .subscribe(
+        res => console.log(res)
+    )
   }
 
   // submit all foodSelected to BE
