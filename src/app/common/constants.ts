@@ -1,4 +1,4 @@
-// Object we use in the FE
+// FoodItem object we use in the FE
 export interface FoodItem {
     foodId: string,
     foodName: string,
@@ -48,4 +48,13 @@ export enum NutritionsToShow {
     'foodCalorie' = 'Calories',
     'foodCarb' = 'Carbs',
     'foodProtein' = 'Protein',
+}
+
+// UserInfo received from the BE
+export interface UserInfoBE {
+    recordId: number,
+    foodId: number,
+    quantity: number,
+    userId: string,
+    recordDate: string,
 }

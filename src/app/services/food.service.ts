@@ -1,8 +1,7 @@
 import { HttpClient } from '@angular/common/http';
-import { isNgTemplate } from '@angular/compiler';
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { createFoodItem, FoodInfoBE, FoodItem } from '../common/constants';
 
 @Injectable({
@@ -16,7 +15,7 @@ export class FoodService {
   constructor(private httpClient: HttpClient) { }
 
   // Get a list of Food items nutritions by giving the food id
-  public async getFoodListById(id: string): Promise<FoodItem> {
+  public async getFoodItemById(id: string, quantity?: number): Promise<FoodItem> {
     return await this.httpClient.get<FoodInfoBE[]>(this.baseUrl, {
       params: {
         id: id,
@@ -46,7 +45,7 @@ export class FoodService {
           } 
         });
         return createFoodItem(res[0].foodId.toString(), res[0].foodDescription,
-          res[0].servingSize, calories, carb, protein, 1);
+          res[0].servingSize, calories, carb, protein, quantity ? quantity : 1);
       })
     ).toPromise()
   }

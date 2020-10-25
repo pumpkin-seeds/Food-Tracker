@@ -9,7 +9,7 @@
     </mat-card-header>
 
     <div class="right">
-        <app-date-picker></app-date-picker>
+        <app-date-picker (datePicked)="onDatePicked($event)"></app-date-picker>
     </div>
     <div class="centered-horizontal">
         <!-- (onFoodPicked)="onFoodSelect($event) is child component autocomplete-search -->

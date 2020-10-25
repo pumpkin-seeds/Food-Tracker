@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 
 @Component({
   selector: 'app-date-picker',
@@ -7,9 +8,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DatePickerComponent implements OnInit {
 
+  @Output() datePicked = new EventEmitter<Date>();
+
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  onDateChange(event: MatDatepickerInputEvent<Date>) {
+    this.datePicked.emit(event.value);
   }
 
 }

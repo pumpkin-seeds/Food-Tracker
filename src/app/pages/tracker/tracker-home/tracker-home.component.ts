@@ -1,7 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { emptyFoodItem, FoodItem } from 'src/app/common/constants';
+import { formatDate } from '@angular/common';
+import { Component, Input, OnInit } from '@angular/core';
+import { map, switchMap } from 'rxjs/operators';
+import { emptyFoodItem, FoodItem, UserInfoBE } from 'src/app/common/constants';
 import { addFoodNutritionToSummary, getFoodItemObjectFromID, getFoodItemObjectFromId, removeFoodNutritionFromSummary, updateFoodNutritionToSummary } from 'src/app/common/utils';
 import { FoodService } from 'src/app/services/food.service';
+import { UserInfoService } from 'src/app/services/user-info.service';
 
 @Component({
   selector: 'app-tracker-home',
@@ -13,7 +16,7 @@ export class TrackerHomeComponent implements OnInit {
   foodSelected: FoodItem[] = [];
   summaryNutrition: FoodItem = emptyFoodItem;
 
-  constructor(private foodService: FoodService) {
+  constructor(private foodService: FoodService, private userInfoService: UserInfoService) {
   }
 
   ngOnInit(): void {
@@ -26,7 +29,7 @@ export class TrackerHomeComponent implements OnInit {
       // TODO(minalong): show a warning to user that they're trying to add duplicate food
       return;
     }
-    this.foodService.getFoodListById(foodid).then(res => {
+    this.foodService.getFoodItemById(foodid).then(res => {
       this.foodSelected.push(res);
       // update current summary nutrition
       this.summaryNutrition = addFoodNutritionToSummary(res, this.summaryNutrition)
@@ -55,7 +58,27 @@ export class TrackerHomeComponent implements OnInit {
       updateFoodNutritionToSummary(foodItem, oldQuantity, newQuantity, this.summaryNutrition);
   }
 
-  // submit current page selections
+  // get food selected list from BE
+  // TODO: to add userId when app builds authentication
+  onDatePicked(dateSelected: Date): void {
+    const formatted = formatDate(dateSelected, 'yyyy-MM-dd', 'en-US')
+    this.userInfoService.getUserInfo(formatted, "johnmark")
+      .pipe(
+        switchMap(userInfoList => {
+          userInfoList.forEach(async element => {
+            // this.foodSelected.push(await this.foodService
+            // .getFoodItemById(element.foodId.toString(), element.quantity));
+            // return this.foodService.getFoodItemById(element.foodId.toString(), element.quantity)
+            //   .then(res => this.foodSelected.push(res));
+          })
+        }),
+      )
+    // .subscribe(
+    //   res => console.log(res)
+    // )
+  }
+
+  // submit all foodSelected to BE
   onSubmit() {
     // TODO(minalong): call service to submit to backend.
   }
