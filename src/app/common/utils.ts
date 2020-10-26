@@ -32,7 +32,7 @@ export function addFoodNutritionToSummary(newFood: FoodItem, existingNutrition: 
     let res = <FoodItem>{};
     for (let key in existingNutrition) {
         if (typeof newFood[key] === 'number') {
-            res[key] = roundToOne((existingNutrition[key] + newFood[key]));
+            res[key] = roundToOne((existingNutrition[key] + newFood.foodQuantity * newFood[key]));
         }
     }
     return res;

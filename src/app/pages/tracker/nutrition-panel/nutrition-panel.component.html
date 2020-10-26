@@ -24,9 +24,10 @@
                        matTooltip="Mininum Quantity is 1"
                        (click)="$event.stopPropagation()"
                        class="quantity-input"
-                       value="1"
+                       [(value)]="food.foodQuantity"
+                       (ng-change)="value=food.quantity"
                        (input)="updateQuantity(food,$event.target.value)" />
-                <!-- above input binding is one way -->
+                <!-- above input binding is two-way binding [()] -->
             </mat-expansion-panel-header>
             <mat-list *ngFor="let key of nutritionEnumKeys">
                 <mat-list-item>

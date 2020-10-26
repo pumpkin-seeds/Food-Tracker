@@ -1,5 +1,6 @@
 import { formatDate } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { merge } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { emptyFoodItem, FoodItem, UserInfoBE } from 'src/app/common/constants';
 import { addFoodNutritionToSummary, getFoodItemObjectFromID, getFoodItemObjectFromId, removeFoodNutritionFromSummary, updateFoodNutritionToSummary } from 'src/app/common/utils';
@@ -64,21 +65,22 @@ export class TrackerHomeComponent implements OnInit {
   // get food selected list from BE
   // TODO: to add userId when app builds authentication
   onDatePicked(dateSelected: Date): void {
+    this.foodSelected = [];
     const formatted = formatDate(dateSelected, 'yyyy-MM-dd', 'en-US')
     this.userInfoService.getUserInfo(formatted, "johnmark")
       .pipe(
-        // switchMap(userInfoList => {
-        //   userInfoList.forEach(async element => {
-            // this.foodSelected.push(await this.foodService
-            // .getFoodItemById(element.foodId.toString(), element.quantity));
-        //     return this.foodService.getFoodItemById(element.foodId.toString(), element.quantity)
-        //       .then(res => this.foodSelected.push(res));
-        //   })
-        // }),
-      )
-      .subscribe(
-        res => console.log(res)
-    )
+        switchMap(userInfoList => {
+          const obs = userInfoList.map(element => {
+            // console.log(element);
+            return this.foodService.getFoodItemById(element.foodId.toString(), element.quantity);
+          })
+          return merge(...obs);
+        }),
+      ).subscribe(res => {
+        // console.log(res);
+        this.foodSelected.push(res);
+        this.summaryNutrition = addFoodNutritionToSummary(res, this.summaryNutrition)
+      })
   }
 
   // submit all foodSelected to BE
