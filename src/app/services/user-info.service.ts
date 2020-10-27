@@ -22,4 +22,9 @@ export class UserInfoService {
       }
     });
   }
+
+  // Submit userinfo to BE
+  public submitUserInfo(list: UserInfoBE[]) {
+    return this.httpClient.post(this.baseUrl, list);
+  }
 }

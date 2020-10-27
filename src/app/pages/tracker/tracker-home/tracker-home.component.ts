@@ -2,7 +2,7 @@ import { formatDate } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { merge } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
-import { emptyFoodItem, FoodItem, UserInfoBE } from 'src/app/common/constants';
+import { emptyFoodItem, FoodItem, UserInfoBE, createUserInfo } from 'src/app/common/constants';
 import { addFoodNutritionToSummary, getFoodItemObjectFromID, getFoodItemObjectFromId, removeFoodNutritionFromSummary, updateFoodNutritionToSummary } from 'src/app/common/utils';
 import { FoodService } from 'src/app/services/food.service';
 import { UserInfoService } from 'src/app/services/user-info.service';
@@ -16,6 +16,7 @@ export class TrackerHomeComponent implements OnInit {
 
   foodSelected: FoodItem[] = [];
   summaryNutrition: FoodItem = emptyFoodItem;
+  recordDate: string;
 
   constructor(private foodService: FoodService, private userInfoService: UserInfoService) {
   }
@@ -67,6 +68,7 @@ export class TrackerHomeComponent implements OnInit {
   onDatePicked(dateSelected: Date): void {
     this.foodSelected = [];
     const formatted = formatDate(dateSelected, 'yyyy-MM-dd', 'en-US')
+    this.recordDate = formatted;
     this.userInfoService.getUserInfo(formatted, "johnmark")
       .pipe(
         switchMap(userInfoList => {
@@ -85,6 +87,12 @@ export class TrackerHomeComponent implements OnInit {
 
   // submit all foodSelected to BE
   onSubmit() {
-    // TODO(minalong): call service to submit to backend.
+    let listOfUserRecord: UserInfoBE[] = [];
+    for (let food of this.foodSelected) {
+      // TODO: to add userId when app builds authentication
+      const record = createUserInfo(food, "johnmark", this.recordDate);
+      listOfUserRecord.push(record);
+    }
+    this.userInfoService.submitUserInfo(listOfUserRecord).subscribe();
   }
 }

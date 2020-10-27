@@ -58,3 +58,12 @@ export interface UserInfoBE {
     userId: string,
     recordDate: string,
 }
+
+// Function to create a new object of UserInfoBE interface type
+export const createUserInfo = (foodItem: FoodItem, userId: string, date: string): UserInfoBE => ({
+    recordId: 0,
+    foodId: parseInt(foodItem.foodId),
+    quantity: foodItem.foodQuantity,
+    userId: userId,
+    recordDate: date,
+});
