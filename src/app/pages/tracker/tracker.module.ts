@@ -13,6 +13,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatDialogModule } from '@angular/material/dialog';
+
 
 import { TrackerRoutingModule } from './tracker-routing.module';
 import { TrackerHomeComponent } from './tracker-home/tracker-home.component';
@@ -21,6 +23,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DatePickerComponent } from './date-picker/date-picker.component';
 import { MatNativeDateModule } from '@angular/material/core';
 import { NutritionPanelComponent } from './nutrition-panel/nutrition-panel.component';
+import { SubmitDialogComponent } from './submit-dialog/submit-dialog.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +31,7 @@ import { NutritionPanelComponent } from './nutrition-panel/nutrition-panel.compo
     AutocompleteSearchComponent,
     DatePickerComponent,
     NutritionPanelComponent,
+    SubmitDialogComponent,
   ],
   imports: [
     CommonModule,
@@ -48,6 +52,11 @@ import { NutritionPanelComponent } from './nutrition-panel/nutrition-panel.compo
     MatExpansionModule,
     MatButtonModule,
     MatTooltipModule,
+    MatDialogModule,
+  ],
+  entryComponents: [
+    // need to add the dialog component to entryComponents
+    SubmitDialogComponent,
   ]
 })
 export class TrackerModule { }

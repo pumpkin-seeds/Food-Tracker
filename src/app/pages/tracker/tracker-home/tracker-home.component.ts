@@ -1,11 +1,13 @@
 import { formatDate } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { merge } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { emptyFoodItem, FoodItem, UserInfoBE, createUserInfo } from 'src/app/common/constants';
 import { addFoodNutritionToSummary, getFoodItemObjectFromID, getFoodItemObjectFromId, removeFoodNutritionFromSummary, updateFoodNutritionToSummary } from 'src/app/common/utils';
 import { FoodService } from 'src/app/services/food.service';
 import { UserInfoService } from 'src/app/services/user-info.service';
+import { SubmitDialogComponent } from '../submit-dialog/submit-dialog.component';
 
 @Component({
   selector: 'app-tracker-home',
@@ -18,7 +20,10 @@ export class TrackerHomeComponent implements OnInit {
   summaryNutrition: FoodItem = emptyFoodItem;
   recordDate: string;
 
-  constructor(private foodService: FoodService, private userInfoService: UserInfoService) {
+  constructor(
+    private foodService: FoodService,
+    private userInfoService: UserInfoService,
+    private dialog: MatDialog) {
   }
 
   ngOnInit(): void {
@@ -66,6 +71,18 @@ export class TrackerHomeComponent implements OnInit {
   // get food selected list from BE
   // TODO: to add userId when app builds authentication
   onDatePicked(dateSelected: Date): void {
+    // if there's no record date, then show error dialog.
+    if (!dateSelected) {
+      const dialogConfig = new MatDialogConfig();
+      dialogConfig.data = {
+        title: 'Error: Date',
+        content: 'Please select a date!',
+      }
+      this.dialog.open(SubmitDialogComponent, dialogConfig);
+      this.recordDate = null; // reset to null
+      return;
+    }
+
     this.foodSelected = [];
     const formatted = formatDate(dateSelected, 'yyyy-MM-dd', 'en-US')
     this.recordDate = formatted;
@@ -87,12 +104,33 @@ export class TrackerHomeComponent implements OnInit {
 
   // submit all foodSelected to BE
   onSubmit() {
+    // if there's no record date, then do not submit and show error dialog.
+    console.log(this.recordDate);
+    if (!this.recordDate || this.recordDate.length === 0) {
+      const dialogConfig = new MatDialogConfig();
+      dialogConfig.data = {
+        title: 'Error: Date',
+        content: 'Please select a date in order to submit!',
+      }
+      this.dialog.open(SubmitDialogComponent, dialogConfig);
+      return;
+    }
+
     let listOfUserRecord: UserInfoBE[] = [];
     for (let food of this.foodSelected) {
       // TODO: to add userId when app builds authentication
       const record = createUserInfo(food, "johnmark", this.recordDate);
       listOfUserRecord.push(record);
     }
-    this.userInfoService.submitUserInfo(listOfUserRecord).subscribe();
+    this.userInfoService.submitUserInfo(listOfUserRecord).subscribe(
+      () => {
+        const dialogConfig = new MatDialogConfig();
+        dialogConfig.data = {
+          title: 'Success',
+          content: 'Submission succeeded!',
+        }
+        this.dialog.open(SubmitDialogComponent, dialogConfig);
+      }
+    );
   }
 }
