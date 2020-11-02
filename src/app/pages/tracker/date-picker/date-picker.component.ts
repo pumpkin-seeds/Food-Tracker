@@ -21,7 +21,6 @@ export class DatePickerComponent implements OnInit {
   }
 
   onDateChange(event: MatDatepickerInputEvent<Date>) {
-    console.log("date is:", event.value);
     this.datePicked.emit(event.value);
   }
 

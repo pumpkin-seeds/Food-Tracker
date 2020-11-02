@@ -70,6 +70,7 @@ export class TrackerHomeComponent implements OnInit {
 
   // get food selected list from BE
   // TODO: to add userId when app builds authentication
+  // TODO: clean up summary when changing dates (total nutrition is wrong)
   onDatePicked(dateSelected: Date): void {
     // if there's no record date, then show error dialog.
     if (!dateSelected) {
@@ -105,7 +106,6 @@ export class TrackerHomeComponent implements OnInit {
   // submit all foodSelected to BE
   onSubmit() {
     // if there's no record date, then do not submit and show error dialog.
-    console.log(this.recordDate);
     if (!this.recordDate || this.recordDate.length === 0) {
       const dialogConfig = new MatDialogConfig();
       dialogConfig.data = {
