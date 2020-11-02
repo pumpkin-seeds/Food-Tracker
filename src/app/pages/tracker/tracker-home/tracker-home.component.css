@@ -13,9 +13,7 @@
 
 .right {
     position: relative;
-    float: right;
-    right: 10px;
-    width: 300px;
+    left: 60%;
     padding: 10px;
 }
 
