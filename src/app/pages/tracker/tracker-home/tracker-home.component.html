@@ -5,7 +5,7 @@
 <mat-card class="tracker-card">
     <mat-card-header>
         <mat-card-title fxLayoutAlign="center">Calculate your daily carb intake</mat-card-title>
-        <mat-card-subtitle>Are you ready?</mat-card-subtitle>
+        <mat-card-subtitle>Are you ready...?</mat-card-subtitle>
     </mat-card-header>
 
     <div class="right">
@@ -20,7 +20,7 @@
     <div *ngIf="foodSelected.length>0">
         <div>
             <app-nutrition-panel [foodList]="foodSelected"
-                                 [foodSumary]="summaryNutrition"
+                                 [foodSummary]="summaryNutrition"
                                  (onFoodDeletion)="onFoodDeleted($event)"
                                  (onQuantityChange)="onFoodQuantityChange($event)">
             </app-nutrition-panel>

@@ -85,6 +85,7 @@ export class TrackerHomeComponent implements OnInit {
     }
 
     this.foodSelected = [];
+    this.summaryNutrition = emptyFoodItem;
     const formatted = formatDate(dateSelected, 'yyyy-MM-dd', 'en-US')
     this.recordDate = formatted;
     this.userInfoService.getUserInfo(formatted, "johnmark")

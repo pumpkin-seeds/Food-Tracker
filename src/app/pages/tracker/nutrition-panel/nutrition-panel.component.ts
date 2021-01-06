@@ -9,7 +9,7 @@ import { FoodItem, NutritionsToShow } from 'src/app/common/constants';
 export class NutritionPanelComponent implements OnInit {
 
   @Input() foodList: FoodItem[] = []; // emitted property from parent tracker-home
-  @Input() foodSumary: FoodItem;
+  @Input() foodSummary: FoodItem;  // tracker home component calculates the summary
   @Output() onFoodDeletion = new EventEmitter<FoodItem>();
   @Output() onQuantityChange = new EventEmitter<{ foodId: string, newQuantity: number }>(); // emit object
 
