@@ -3,10 +3,11 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { merge } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
-import { emptyFoodItem, FoodItem, UserInfoBE, createUserInfo } from 'src/app/common/constants';
+import { emptyFoodItem, FoodItem, UserInfoBE, createUserInfo, FoodInfoBE } from 'src/app/common/constants';
 import { addFoodNutritionToSummary, getFoodItemObjectFromID, getFoodItemObjectFromId, removeFoodNutritionFromSummary, updateFoodNutritionToSummary } from 'src/app/common/utils';
 import { FoodService } from 'src/app/services/food.service';
 import { UserInfoService } from 'src/app/services/user-info.service';
+import { UserPreferenceService } from 'src/app/services/user-preference.service';
 import { SubmitDialogComponent } from '../submit-dialog/submit-dialog.component';
 
 @Component({
@@ -17,16 +18,23 @@ import { SubmitDialogComponent } from '../submit-dialog/submit-dialog.component'
 export class TrackerHomeComponent implements OnInit {
 
   foodSelected: FoodItem[] = [];
+  commonFood: FoodInfoBE[] = [];  // common food consumed by this user
   summaryNutrition: FoodItem = emptyFoodItem;
   recordDate: string;
 
   constructor(
     private foodService: FoodService,
     private userInfoService: UserInfoService,
+    private userPreferenceService: UserPreferenceService,
     private dialog: MatDialog) {
   }
 
   ngOnInit(): void {
+    this.userPreferenceService.getUserPreferredFood("johnmark", 3).subscribe(
+      res => {
+        this.commonFood = res;
+      }
+    );
   }
 
   // child component autocomplete-search selects a food and emit an event to tracker-home component

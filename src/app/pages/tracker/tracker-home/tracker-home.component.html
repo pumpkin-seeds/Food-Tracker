@@ -17,6 +17,12 @@
         <app-autocomplete-search (onFoodPicked)="onFoodSelect($event)"></app-autocomplete-search>
     </div>
 
+    <div>
+        <app-common-food-chips [preferredFood]="commonFood"
+                               (onPreferredFoodPicked)="onFoodSelect($event)">
+        </app-common-food-chips>
+    </div>
+
     <div *ngIf="foodSelected.length>0">
         <div>
             <app-nutrition-panel [foodList]="foodSelected"

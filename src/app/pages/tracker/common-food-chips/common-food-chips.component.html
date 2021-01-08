@@ -1,0 +1,9 @@
+<mat-chip-list aria-label="Common Food Selection"
+               *ngFor="let foodChip of preferredFood">
+    <mat-chip color="primary"
+              [selected]="foodChip.state"
+              (click)="foodChip.state=!foodChip.state"
+              (selectionChange)="foodSelected($event, foodChip.foodId)">{{ foodChip.foodDescription
+        }}
+    </mat-chip>
+</mat-chip-list>

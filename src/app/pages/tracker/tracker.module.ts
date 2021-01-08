@@ -14,7 +14,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDialogModule } from '@angular/material/dialog';
-
+import { MatChipsModule } from '@angular/material/chips';
 
 import { TrackerRoutingModule } from './tracker-routing.module';
 import { TrackerHomeComponent } from './tracker-home/tracker-home.component';
@@ -24,6 +24,7 @@ import { DatePickerComponent } from './date-picker/date-picker.component';
 import { MatNativeDateModule } from '@angular/material/core';
 import { NutritionPanelComponent } from './nutrition-panel/nutrition-panel.component';
 import { SubmitDialogComponent } from './submit-dialog/submit-dialog.component';
+import { CommonFoodChipsComponent } from './common-food-chips/common-food-chips.component';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { SubmitDialogComponent } from './submit-dialog/submit-dialog.component';
     DatePickerComponent,
     NutritionPanelComponent,
     SubmitDialogComponent,
+    CommonFoodChipsComponent,
   ],
   imports: [
     CommonModule,
@@ -53,6 +55,7 @@ import { SubmitDialogComponent } from './submit-dialog/submit-dialog.component';
     MatButtonModule,
     MatTooltipModule,
     MatDialogModule,
+    MatChipsModule,
   ],
   entryComponents: [
     // need to add the dialog component to entryComponents
